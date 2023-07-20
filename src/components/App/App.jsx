@@ -13,6 +13,22 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem('phoneBookContacts'));
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(
+        'phoneBookContacts',
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
+
   handleFilterChange = event => {
     this.setState({ filter: event.target.value });
   };
